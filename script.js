@@ -101,16 +101,41 @@ function initQuiz() {
                 row = document.createElement("div");
                 row.setAttribute("class", "row mb-1");
                 col.append(row);
+                ///THIS! switch from col2 to col for degugging///
+                var col2 = document.createElement("div");
+                col2.setAttribute("class", "col-12");
+                row.append(col2);
+
+                button = document.createElement("button");
+                button.setAttribute("class", "btn btn-primary");
+                button.setAttribute("type", "button");
+                button.innerHTML = questions[currentQuestion - 1].choices[i];
+                col2.append(button);
+                //////Function///////
+                button.addEventListener("click", function () {
+                        if (outOfTime) {
+                            return;
+                        }
+                        outOfTime = true;
+
+
+
+
+
+                    }
+
+
+
+
+                }
+
+
 
             }
 
 
 
         }
-
-
+        startButton.addEventListener("click", startQuiz);
 
     }
-    startButton.addEventListener("click", startQuiz);
-
-}

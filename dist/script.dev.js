@@ -86,7 +86,18 @@ function initQuiz() {
       for (var i = 0; i < 4; i++) {
         row = document.createElement("div");
         row.setAttribute("class", "row mb-1");
-        col.append(row);
+        col.append(row); ///THIS!///
+
+        var col2 = document.createElement("div");
+        col2.setAttribute("class", "col-12");
+        row.append(col2);
+        button = document.createElement("button");
+        button.setAttribute("class", "btn btn-primary");
+        button.setAttribute("type", "button");
+        button.innerHTML = questions[currentQuestion - 1].choices[i];
+        col2.append(button); //////
+
+        butt;
       }
     }
   }
