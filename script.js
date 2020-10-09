@@ -35,6 +35,18 @@ function startQuiz() {
     homeContainer.setAttribute("class", remainingTime);
 
 
+    var myInterval = setInterval(function () {
+        if (timeRemaining < 1) {
+            clearInterval(myInterval);
+            var currentQuestion = 1;
+            quizContainer.setAttribute("class", "container");
+            finalContainer.setAttribute("class", "container");
+            return;
+        }
+        timeRemaining = timeRemaining - 1;
+        remainingTime.setAttribute("value", timeRemaining);
+    }, 1000);
+
 }
 
 function generateQuestion() {
