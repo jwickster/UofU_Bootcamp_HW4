@@ -112,22 +112,28 @@ function initQuiz() {
                 button.innerHTML = questions[currentQuestion - 1].choices[i];
                 col2.append(button);
                 //////Function///////
+
                 button.addEventListener("click", function () {
-                        if (outOfTime) {
-                            return;
-                        }
-                        outOfTime = true;
-
-
-
-
-
+                    if (outOfTime) {
+                        return;
                     }
+                    outOfTime = true;
+                    clearInterval(myInterval);
+                    col = quizContainer.children[0].children[1];
+                    row = document.createElement("div");
+                    row.setAttribute("class", "row border-top");
+                    col.append(row);
+
+                    col = document.createElement("div");
+                    col.setAttribute("class", "col-12");
+                    row.append(col);
+
+                    var parEl = document.createElement("p");
+                    col.append(parEl);
+
+                });
 
 
-
-
-                }
 
 
 
@@ -135,7 +141,12 @@ function initQuiz() {
 
 
 
+
         }
-        startButton.addEventListener("click", startQuiz);
+
 
     }
+
+
+    startButton.addEventListener("click", startQuiz);
+}

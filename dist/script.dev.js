@@ -86,7 +86,7 @@ function initQuiz() {
       for (var i = 0; i < 4; i++) {
         row = document.createElement("div");
         row.setAttribute("class", "row mb-1");
-        col.append(row); ///THIS!///
+        col.append(row); ///THIS! switch from col2 to col for degugging///
 
         var col2 = document.createElement("div");
         col2.setAttribute("class", "col-12");
@@ -95,9 +95,25 @@ function initQuiz() {
         button.setAttribute("class", "btn btn-primary");
         button.setAttribute("type", "button");
         button.innerHTML = questions[currentQuestion - 1].choices[i];
-        col2.append(button); //////
+        col2.append(button); //////Function///////
 
-        butt;
+        button.addEventListener("click", function () {
+          if (outOfTime) {
+            return;
+          }
+
+          outOfTime = true;
+          clearInterval(myInterval);
+          col = quizContainer.children[0].children[1];
+          row = document.createElement("div");
+          row.setAttribute("class", "row border-top");
+          col.append(row);
+          col = document.createElement("div");
+          col.setAttribute("class", "col-12");
+          row.append(col);
+          var parEl = document.createElement("p");
+          col.append(parEl);
+        });
       }
     }
   }
