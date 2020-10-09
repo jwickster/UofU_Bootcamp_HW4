@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Setting up a navbar to keep high scores, buttons, etc.  -->
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- container for shit in navbar -->
+        <div class="container navbar-container">
+            <!-- high score button -->
+            <button type="button" id="highscore-button" class="btn btn-success high-scores-button">
+                High Scores
+            </button>
+        </div>
+        <!-- remove if needed -->
+        <div class="col-3 col-md-7"></div>
+        <!-- form to hold time Remaining -->
+        <div class="col-3 col-md-5">
+            <form>
+                <div class="form-group">
+                    <label for="time-remaining" class="col-sm-6 col-form-label">
+                        Time Remaining
+                    </label>
+                    <div class="col-sm-5">
+                        <input type="number" readonly class="form-control" id="time-remaining" placeholder="0">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <!-- landing portion for start button:  
+        https://stackoverflow.com/questions/41574776/what-is-class-mb-0-in-bootstrap-4-->
+
+    <div class="jumbotron" id="landing-container">
+        <!-- margin-bottom 3 -->
+        <div class="row mb-3">
+            <div class="col-12 instructions">
+                <p class="marquee">
+                    <span>
+                        Answer all the questions before the timer runs out! Each wrong answer will subtract 10 seconds
+                        from the timer. The more time left on the clock when all questions are answered, the higher your
+                        score!
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button id="start-button" type="button" class="btn btn-primary btn-lg">Start Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- end of landing portion -->
+
+    <!-- d-none for instantiating flow of where questions populate https://getbootstrap.com/docs/4.0/utilities/display/-->
+    <div id="quiz-container" class="container d-none"></div>
+
+    <!-- final container to store high scores -->
+    <div class="final-container d-none">
+        <div class="row">
+            <div class="text-center col-12">
+                <form>
+                    <div class="form-group row">
+                        <label for="final-score" class="col-sm-7 col-form-label">Final Score</label>
+                        <div class="col-sm-5">
+                            <input type="number" readonly class="form-control" id="final-score" placeholder="0">
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group">
+                        <label for="initials-entry">Initials</label>
+                        <input aria-describedby="initialssssss" class="form-control" id="initials-entry"
+                            placeholder="Enter initials" type="name">
+                    </div>
+                    <button id="submit-initials" type="button" class="btn btn-danger">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <form>
+            <div class="form-group">
+
+            </div>
+        </form>
+
+
+
+    </div>
+
+    <!-- high score container -->
+    <div class="container d-none" id="highscore-container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div id="highscore-table" class="col-12">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2>High Scores</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+
+
+    <!--misc files-->
+    <script src="./questions.js"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>

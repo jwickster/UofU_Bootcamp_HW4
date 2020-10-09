@@ -1,0 +1,18 @@
+.time-Remaining {
+    color: aqua;
+}
+
+.instructions {
+    text-align: center;
+
+}
+
+.marquee {
+
+    will-change: transform;
+    animation: marquee 15s linear infinite;
+}
+
+.final-score {
+    text-align: center;
+}
