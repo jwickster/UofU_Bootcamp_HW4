@@ -111,5 +111,18 @@ function displayQuestion(questionNumber) {
     row.append(col);
     parEl = document.createElement("p");
     colEl.append(parEl);
+
+    if (this.innerHTML === [currentQuestion - 1].answer) {
+      parEl.innerHTML = "CORRECT";
+    } else {
+      parEl.innerHTML = "INCORRECT";
+      timeRemaining = timeRemaining - 10;
+
+      if (timeRemaining < 0) {
+        alert("Time up!");
+      }
+
+      timeRemaining.setAttribute("value", timeRemaining);
+    }
   }
 }
