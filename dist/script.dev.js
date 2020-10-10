@@ -1,20 +1,22 @@
 "use strict";
 
 function initializeQuiz() {
-  var timeRemaining = 0;
+  //   Linking elements to variables
   var startButtonEl = document.getElementById("start-button");
   var timeRemainingEl = document.getElementById("time-remaining");
   var finalScoreEl = document.getElementById("final-score");
-  var numQuestions = questions.length;
   var landingContainerEl = document.getElementById("landing-container");
   var quizContainerEl = document.getElementById("quiz-container");
   var finalContainerEl = document.getElementById("final-container");
   var submitButtonEl = document.getElementById("submit-initials");
   var highscoreButtonEl = document.getElementById("highscore-button");
-  var highscoreContainerEl = document.getElementById("highscore-container");
-  var highScores = [];
+  var highscoreContainerEl = document.getElementById("highscore-container"); //initializations
 
-  if (JSON.parse(localStorage.getItem('scores')) !== null) {
+  var highScores = [];
+  var numQuestions = questions.length;
+  var timeRemaining = 0;
+
+  if (JSON.parse(localStorage.getItem("scores")) !== null) {
     highScores = JSON.parse(localStorage.getItem("scores"));
   }
 
