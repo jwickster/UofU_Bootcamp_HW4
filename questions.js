@@ -1,9 +1,9 @@
 var questions = [
 
     {
-        title: "Question 1: The logical  that represents 'AND' is ____.",
-        choices: ["||", "OR", "&&", "AND"],
-        answer: "&&"
+        title: "Null is an object T/F?",
+        choices: ["True", "False"],
+        answer: "True"
     },
 
     {
@@ -19,9 +19,9 @@ var questions = [
     },
 
     {
-        title: "Question 4: The instructions for a function are enclosed within ____.",
-        choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
-        answer: "curly brackets"
+        title: "Replace() can accept a ____ function",
+        choices: ["Callback", "Frontback", "Recursive", "Anonymous"],
+        answer: "Callback"
     },
 
     {
