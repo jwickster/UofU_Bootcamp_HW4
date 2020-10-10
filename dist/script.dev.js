@@ -71,16 +71,12 @@ function initializeQuiz() {
       colEl = quizContainerEl.children[0].children[1];
 
       for (var _i = 0; _i < 4; _i++) {
-        var _rowEl = document.createElement("div");
-
-        _rowEl.setAttribute("class", "row mb-5");
-
-        colEl.append(_rowEl);
+        var rowEl = document.createElement("div");
+        rowEl.setAttribute("class", "row mb-5");
+        colEl.append(rowEl);
         var colEl2 = document.createElement("div");
         colEl2.setAttribute("class", "col-8");
-
-        _rowEl.append(colEl2);
-
+        rowEl.append(colEl2);
         buttonEl = document.createElement("button");
         buttonEl.setAttribute("class", "btn btn-primary");
         buttonEl.setAttribute("type", "button");
