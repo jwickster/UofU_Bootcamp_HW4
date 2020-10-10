@@ -152,8 +152,8 @@ function initializeQuiz() {
         }
 
         function saveHighScore() {
-            let initialsEl = document.getElementById("initials-entry");
-            let newHighScore = {
+            var initialsEl = document.getElementById("initials-entry");
+            var newHighScore = {
                 initials: initialsEl.value,
                 highScore: score
             };
