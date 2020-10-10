@@ -12,7 +12,7 @@
 
 <body>
     <!-- Setting up a navbar to keep high scores, buttons, etc.  -->
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <!-- container for shit in navbar -->
         <div class="container navbar-container">
             <!-- high score button -->
@@ -26,7 +26,7 @@
         <div class="col-3 col-md-5">
             <form>
                 <div class="form-group">
-                    <label for="time-remaining" class="col-sm-6 col-form-label">
+                    <label for="time-remaining" class="col-sm-6 col-form-label" id="timeremaining2">
                         Time Remaining
                     </label>
                     <div class="col-sm-5">
@@ -40,16 +40,13 @@
     <!-- landing portion for start button:  
         https://stackoverflow.com/questions/41574776/what-is-class-mb-0-in-bootstrap-4-->
 
-    <div class="jumbotron" id="landing-container">
-        <!-- margin-bottom 3 -->
+    <div class="jumbotron container " id="landing-container">
+        <!-- margin-bottom 3 https://www.youtube.com/watch?v=04gP_FVUbSg-->
         <div class="row mb-3">
-            <div class="col-12 instructions">
-                <p class="marquee">
-                    <span>
-                        Answer all the questions before the timer runs out! Each wrong answer will subtract 10 seconds
-                        from the timer. The more time left on the clock when all questions are answered, the higher your
-                        score!
-                    </span>
+            <div class="col-12 text-center ">
+                <p>
+                    Answer the questions the best yuou can. For each incorrect answer, 10 seconds
+                    will be deducted from your score. Your final time will be your score. Good luck!
                 </p>
             </div>
         </div>
@@ -62,16 +59,16 @@
 
     <!-- end of landing portion -->
 
-    <!-- d-none for instantiating flow of where questions populate https://getbootstrap.com/docs/4.0/utilities/display/-->
+    <!-- display-none for instantiating flow of where questions populate https://getbootstrap.com/docs/4.0/utilities/display/-->
     <div id="quiz-container" class="container d-none"></div>
 
     <!-- final container to store high scores -->
-    <div class="final-container d-none">
+    <div class=" final-container d-none" id="final-container">
         <div class="row">
-            <div class="text-center col-12">
+            <div class="col-12 text-center ">
                 <form>
                     <div class="form-group row">
-                        <label for="final-score" class="col-sm-7 col-form-label">Final Score</label>
+                        <label for="final-score" class="col-sm-5 col-form-label">Final Score</label>
                         <div class="col-sm-5">
                             <input type="number" readonly class="form-control" id="final-score" placeholder="0">
                         </div>
@@ -80,29 +77,25 @@
                 <form>
                     <div class="form-group">
                         <label for="initials-entry">Initials</label>
-                        <input aria-describedby="initialssssss" class="form-control" id="initials-entry"
-                            placeholder="Enter initials" type="name">
+                        <input type="name" class="form-control" id="initials-entry" aria-describedby="initials"
+                            placeholder="Enter Initials!">
                     </div>
                     <button id="submit-initials" type="button" class="btn btn-danger">Submit</button>
                 </form>
             </div>
         </div>
 
-        <form>
+        <!-- <form>
             <div class="form-group">
-
             </div>
-        </form>
-
-
-
+        </form> -->
     </div>
 
     <!-- high score container -->
-    <div class="container d-none" id="highscore-container">
+    <div id="highscore-container" class="container d-none">
         <div class="row">
             <div class="col-2"></div>
-            <div id="highscore-table" class="col-12">
+            <div id="highscore-table" class="col-8">
                 <div class="row">
                     <div class="col-12 text-center">
                         <h2>High Scores</h2>

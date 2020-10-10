@@ -1,152 +1,198 @@
-function initQuiz() {
-    var startButton = document.getElementById("start-button");
-    var remainingTime = document.getElementById("time-remaining");
-    var finalScore = document.getElementById("final-score");
-    var homeContainer = document.getElementById("landing-container");
-    var quizContainer = document.getElementById("quiz-container");
-    var finalContainer = document.getElementById("final-container");
-    var submitButton = document.getElementById("submit-initials");
-    var highscoreButton = document.getElementById("highscore-button");
-    var highscoreContainer = document.getElementById("highscore-container");
-    startButton.addEventListener("click", startQuiz);
-    var quizQuestions = questions.length;
-    var highScores = [];
-    var timeRemaining = 0;
-    var outOfTime = false;
+function initializeQuiz() {
+    let timeRemaining = 0;
 
+    const startButtonEl = document.getElementById("start-button");
+    const timeRemainingEl = document.getElementById("time-remaining");
+    const finalScoreEl = document.getElementById("final-score");
+    const numQuestions = questions.length;
+    const landingContainerEl = document.getElementById("landing-container");
+    const quizContainerEl = document.getElementById("quiz-container");
+    const finalContainerEl = document.getElementById("final-container");
+    const submitButtonEl = document.getElementById("submit-initials");
+    const highscoreButtonEl = document.getElementById("highscore-button");
+    const highscoreContainerEl = document.getElementById("highscore-container");
+    let highScores = [];
 
-
-    if (JSON.parse(localStorage.getItem("scores")) !== null) {
+    if (JSON.parse(localStorage.getItem('scores')) !== null) {
         highScores = JSON.parse(localStorage.getItem("scores"));
     }
 
-    //start quiz
     function startQuiz() {
-        homeContainer.setAttribute("class", "container d-none");
-        quizContainer.setAttribute("class", "container");
-        var lockedOut = false;
-        var score = 0;
-        var currentQuestion = 1;
-        var row = null;
-        var col = null;
-        var header = null;
-        var button = null;
-        timeRemaining = quizQuestions * 15;
-        homeContainer.setAttribute("class", remainingTime);
+        landingContainerEl.setAttribute("class", "container d-none");
+        let rowEl = null;
+        let colEl = null;
+        let headerEl = null;
+        let buttonEl = null;
+        quizContainerEl.setAttribute("class", "container");
+        let currentQuestion = 1;
+        let score = 0;
 
+        timeRemaining = numQuestions * 15;
+        timeRemainingEl.setAttribute("value", timeRemaining);
 
-        //https://www.javascripttutorial.net/javascript-dom/javascript-setattribute/
-        //https://www.youtube.com/watch?v=yc-AeIdRVEI
-        var myInterval = setInterval(function () {
+        let myInterval = setInterval(function () {
             if (timeRemaining < 1) {
                 clearInterval(myInterval);
-                var currentQuestion = 1;
-                quizContainer.setAttribute("class", "container");
-                finalContainer.setAttribute("class", "container");
+                quizContainerEl.setAttribute("class", "container d-none");
+                finalContainerEl.setAttribute("class", "container");
                 return;
             }
             timeRemaining = timeRemaining - 1;
-            remainingTime.setAttribute("value", timeRemaining);
+            timeRemainingEl.setAttribute("value", timeRemaining);
         }, 1000);
+        let clickTimeout = false;
+
+        function generateQuestion(questionNum) {
+            quizContainerEl.innerHTML = "";
 
 
-        /*
-        Nested function to generate questions to the DOM Couldnt do concurrent
-        function calls so logic being fire off a generate Questions function while
-        quiz is being initialized by the DOM
-        */
-        function generateQuestion(questionNumber) {
-            quizContainer.innerHTML = "";
+            rowEl = document.createElement("div");
+            rowEl.setAttribute("class", "row");
+            quizContainerEl.append(rowEl);
 
+            colEl = document.createElement("div");
+            colEl.setAttribute("class", "col-0 col-sm-2");
+            rowEl.append(colEl);
 
-            row = document.createElement("div");
-            row = setAttribute("class", "row");
-            quizContainer.append(row);
+            colEl = document.createElement("div");
+            colEl.setAttribute("class", "col-12 col-sm-8");
+            rowEl.append(colEl);
 
-            col = document.createElement("div");
-            col.setAttribute("class", "col-0 col-sm-2");
-            row.append(col);
+            colEl = document.createElement("div");
+            colEl.setAttribute("class", "col-0 col-sm-2");
+            rowEl.append(colEl);
 
-            col = document.createElement("div");
-            col.setAttribute("class", "col-0 col-sm-2");
-            row.append(col);
+            colEl = rowEl.children[1];
+            rowEl = document.createElement("div");
+            rowEl.setAttribute("class", "row mb-3");
+            colEl.append(rowEl);
 
-            //////
+            colEl = document.createElement("div");
+            colEl.setAttribute("class", "col-12");
+            rowEl.append(colEl);
 
+            headerEl = document.createElement("h2");
+            headerEl.innerHTML = questions[questionNum - 1].title;
+            colEl.append(headerEl);
 
-            col = document.createElement("div");
-            col.setAttribute("class", "col-12 col-sm-8");
-            row.append(col);
+            colEl = quizContainerEl.children[0].children[1];
+            for (let i = 0; i < 4; i++) {
+                let rowEl = document.createElement("div");
+                rowEl.setAttribute("class", "row mb-5");
+                colEl.append(rowEl);
 
-            col = document.createElement("div");
-            col.setAttribute("class", "col-0 col-sm-2");
-            row.append(col);
+                let colEl2 = document.createElement("div");
+                colEl2.setAttribute("class", "col-8");
+                rowEl.append(colEl2);
 
-            col = rowEl.children[1];
-            row = document.createElement("div");
-            row.setAttribute("class", "row mb-3");
-            col.append(row);
+                buttonEl = document.createElement("button");
+                buttonEl.setAttribute("class", "btn btn-primary");
+                buttonEl.setAttribute("type", "button");
+                buttonEl.innerHTML = questions[currentQuestion - 1].choices[i];
+                colEl2.append(buttonEl);
 
-            col = document.createElement("div");
-            col.setAttribute("class", "col-12");
-            row.append(col);
+                ////////
+                buttonEl.addEventListener("click", function () {
 
-            header = document.createElement("h2");
-            header.innerHTML = questions[questionNum - 1].title;
-            col.append(header);
-
-            col = quizContainer.children[0].children[1];
-
-            for (var i = 0; i < 4; i++) {
-                row = document.createElement("div");
-                row.setAttribute("class", "row mb-1");
-                col.append(row);
-                ///THIS! switch from col2 to col for degugging///
-                var col2 = document.createElement("div");
-                col2.setAttribute("class", "col-12");
-                row.append(col2);
-
-                button = document.createElement("button");
-                button.setAttribute("class", "btn btn-primary");
-                button.setAttribute("type", "button");
-                button.innerHTML = questions[currentQuestion - 1].choices[i];
-                col2.append(button);
-                //////Function///////
-
-                button.addEventListener("click", function () {
-                    if (outOfTime) {
+                    if (clickTimeout) {
                         return;
                     }
-                    outOfTime = true;
+                    clickTimeout = true;
                     clearInterval(myInterval);
-                    col = quizContainer.children[0].children[1];
-                    row = document.createElement("div");
-                    row.setAttribute("class", "row border-top");
-                    col.append(row);
+                    let colEl = quizContainerEl.children[0].children[1];
+                    let rowEl = document.createElement("div");
+                    rowEl.setAttribute("class", "row border-top");
+                    colEl.append(rowEl);
 
-                    col = document.createElement("div");
-                    col.setAttribute("class", "col-12");
-                    row.append(col);
+                    colEl = document.createElement("div");
+                    colEl.setAttribute("class", "col-12");
+                    rowEl.append(colEl);
 
-                    var parEl = document.createElement("p");
-                    col.append(parEl);
+                    let parEl = document.createElement("p");
+                    colEl.append(parEl);
+                    if (this.innerHTML === questions[currentQuestion - 1].answer) {
+                        parEl.innerHTML = "Correct!";
+                    } else {
+                        parEl.innerHTML = "Incorrect";
+                        timeRemaining = timeRemaining - 10;
+                        if (timeRemaining < 0) {
+                            timeRemaining = 0;
+                        }
+                        timeRemainingEl.setAttribute("value", timeRemaining);
+                    }
+                    currentQuestion++;
+                    if (currentQuestion > questions.length) {
+                        score = timeRemaining;
+                    }
+                    setTimeout(function () {
 
+                        if (currentQuestion > questions.length) {
+
+                            quizContainerEl.setAttribute("class", "container d-none");
+                            finalContainerEl.setAttribute("class", "container");
+                            finalScoreEl.setAttribute("value", score);
+                        } else {
+                            generateQuestion(currentQuestion);
+                            clickTimeout = false;
+                            myInterval = setInterval(function () {
+                                if (timeRemaining < 1) {
+                                    clearInterval(myInterval);
+                                    quizContainerEl.setAttribute("class", "container d-none");
+                                    finalContainerEl.setAttribute("class", "container");
+                                    return;
+                                }
+                                timeRemaining = timeRemaining - 1;
+                                timeRemainingEl.setAttribute("value", timeRemaining);
+                            }, 1000);
+                        }
+                    }, 2000);
                 });
-
-
-
-
-
+                ///////
             }
-
-
-
-
         }
 
+        function saveHighScore() {
+            let initialsEl = document.getElementById("initials-entry");
+            let newHighScore = {
+                initials: initialsEl.value,
+                highScore: score
+            };
+            console.log(newHighScore); //debugging
+            highScores.push(newHighScore);
+            console.log(highScores);
+            localStorage.setItem("scores", JSON.stringify(highScores));
+        }
+        submitButtonEl.addEventListener("click", saveHighScore);
 
+        generateQuestion(currentQuestion);
     }
+    startButtonEl.addEventListener("click", startQuiz);
 
 
-    startButton.addEventListener("click", startQuiz);
+
+    highscoreButtonEl.addEventListener("click", function () {
+        landingContainerEl.setAttribute("class", "container d-none");
+        quizContainerEl.setAttribute("class", "container d-none");
+        finalContainerEl.setAttribute("class", "container d-none");
+        highscoreContainerEl.setAttribute("class", "container");
+        var colEl = document.getElementById("highscore-table");
+        for (i = 0; i < highScores.length; i++) {
+            var rowEl = document.createElement("div");
+            rowEl.setAttribute("class", "row mb-1");
+            colEl.append(rowEl);
+
+            var colEl2 = document.createElement("div");
+            colEl2.setAttribute("class", "col-12 text-center");
+            rowEl.append(colEl2);
+
+            var parEl = document.createElement("div");
+            parEl.innerHTML = "Initials: " + highScores[i].initials + "   Score: " + highScores[i].highScore;
+            colEl2.append(parEl);
+        }
+    });
+
+
+
+
 }
+initializeQuiz();

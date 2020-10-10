@@ -1,122 +1,188 @@
 "use strict";
 
-function initQuiz() {
-  var startButton = document.getElementById("start-button");
-  var remainingTime = document.getElementById("time-remaining");
-  var finalScore = document.getElementById("final-score");
-  var homeContainer = document.getElementById("landing-container");
-  var quizContainer = document.getElementById("quiz-container");
-  var finalContainer = document.getElementById("final-container");
-  var submitButton = document.getElementById("submit-initials");
-  var highscoreButton = document.getElementById("highscore-button");
-  var highscoreContainer = document.getElementById("highscore-container");
-  startButton.addEventListener("click", startQuiz);
-  var quizQuestions = questions.length;
-  var highScores = [];
+function initializeQuiz() {
   var timeRemaining = 0;
-  var outOfTime = false;
+  var startButtonEl = document.getElementById("start-button");
+  var timeRemainingEl = document.getElementById("time-remaining");
+  var finalScoreEl = document.getElementById("final-score");
+  var numQuestions = questions.length;
+  var landingContainerEl = document.getElementById("landing-container");
+  var quizContainerEl = document.getElementById("quiz-container");
+  var finalContainerEl = document.getElementById("final-container");
+  var submitButtonEl = document.getElementById("submit-initials");
+  var highscoreButtonEl = document.getElementById("highscore-button");
+  var highscoreContainerEl = document.getElementById("highscore-container");
+  var highScores = [];
 
-  if (JSON.parse(localStorage.getItem("scores")) !== null) {
+  if (JSON.parse(localStorage.getItem('scores')) !== null) {
     highScores = JSON.parse(localStorage.getItem("scores"));
-  } //start quiz
-
+  }
 
   function startQuiz() {
-    homeContainer.setAttribute("class", "container d-none");
-    quizContainer.setAttribute("class", "container");
-    var lockedOut = false;
-    var score = 0;
+    landingContainerEl.setAttribute("class", "container d-none");
+    var rowEl = null;
+    var colEl = null;
+    var headerEl = null;
+    var buttonEl = null;
+    quizContainerEl.setAttribute("class", "container");
     var currentQuestion = 1;
-    var row = null;
-    var col = null;
-    var header = null;
-    var button = null;
-    timeRemaining = quizQuestions * 15;
-    homeContainer.setAttribute("class", remainingTime); //https://www.javascripttutorial.net/javascript-dom/javascript-setattribute/
-    //https://www.youtube.com/watch?v=yc-AeIdRVEI
-
+    var score = 0;
+    timeRemaining = numQuestions * 15;
+    timeRemainingEl.setAttribute("value", timeRemaining);
     var myInterval = setInterval(function () {
       if (timeRemaining < 1) {
         clearInterval(myInterval);
-        var currentQuestion = 1;
-        quizContainer.setAttribute("class", "container");
-        finalContainer.setAttribute("class", "container");
+        quizContainerEl.setAttribute("class", "container d-none");
+        finalContainerEl.setAttribute("class", "container");
         return;
       }
 
       timeRemaining = timeRemaining - 1;
-      remainingTime.setAttribute("value", timeRemaining);
+      timeRemainingEl.setAttribute("value", timeRemaining);
     }, 1000);
-    /*
-    Nested function to generate questions to the DOM Couldnt do concurrent
-    function calls so logic being fire off a generate Questions function while
-    quiz is being initialized by the DOM
-    */
+    var clickTimeout = false;
 
-    function generateQuestion(questionNumber) {
-      quizContainer.innerHTML = "";
-      row = document.createElement("div");
-      row = setAttribute("class", "row");
-      quizContainer.append(row);
-      col = document.createElement("div");
-      col.setAttribute("class", "col-0 col-sm-2");
-      row.append(col);
-      col = document.createElement("div");
-      col.setAttribute("class", "col-0 col-sm-2");
-      row.append(col); //////
+    function generateQuestion(questionNum) {
+      quizContainerEl.innerHTML = "";
+      rowEl = document.createElement("div");
+      rowEl.setAttribute("class", "row");
+      quizContainerEl.append(rowEl);
+      colEl = document.createElement("div");
+      colEl.setAttribute("class", "col-0 col-sm-2");
+      rowEl.append(colEl);
+      colEl = document.createElement("div");
+      colEl.setAttribute("class", "col-12 col-sm-8");
+      rowEl.append(colEl);
+      colEl = document.createElement("div");
+      colEl.setAttribute("class", "col-0 col-sm-2");
+      rowEl.append(colEl);
+      colEl = rowEl.children[1];
+      rowEl = document.createElement("div");
+      rowEl.setAttribute("class", "row mb-3");
+      colEl.append(rowEl);
+      colEl = document.createElement("div");
+      colEl.setAttribute("class", "col-12");
+      rowEl.append(colEl);
+      headerEl = document.createElement("h2");
+      headerEl.innerHTML = questions[questionNum - 1].title;
+      colEl.append(headerEl);
+      colEl = quizContainerEl.children[0].children[1];
 
-      col = document.createElement("div");
-      col.setAttribute("class", "col-12 col-sm-8");
-      row.append(col);
-      col = document.createElement("div");
-      col.setAttribute("class", "col-0 col-sm-2");
-      row.append(col);
-      col = rowEl.children[1];
-      row = document.createElement("div");
-      row.setAttribute("class", "row mb-3");
-      col.append(row);
-      col = document.createElement("div");
-      col.setAttribute("class", "col-12");
-      row.append(col);
-      header = document.createElement("h2");
-      header.innerHTML = questions[questionNum - 1].title;
-      col.append(header);
-      col = quizContainer.children[0].children[1];
+      for (var _i = 0; _i < 4; _i++) {
+        var _rowEl = document.createElement("div");
 
-      for (var i = 0; i < 4; i++) {
-        row = document.createElement("div");
-        row.setAttribute("class", "row mb-1");
-        col.append(row); ///THIS! switch from col2 to col for degugging///
+        _rowEl.setAttribute("class", "row mb-5");
 
-        var col2 = document.createElement("div");
-        col2.setAttribute("class", "col-12");
-        row.append(col2);
-        button = document.createElement("button");
-        button.setAttribute("class", "btn btn-primary");
-        button.setAttribute("type", "button");
-        button.innerHTML = questions[currentQuestion - 1].choices[i];
-        col2.append(button); //////Function///////
+        colEl.append(_rowEl);
+        var colEl2 = document.createElement("div");
+        colEl2.setAttribute("class", "col-8");
 
-        button.addEventListener("click", function () {
-          if (outOfTime) {
+        _rowEl.append(colEl2);
+
+        buttonEl = document.createElement("button");
+        buttonEl.setAttribute("class", "btn btn-primary");
+        buttonEl.setAttribute("type", "button");
+        buttonEl.innerHTML = questions[currentQuestion - 1].choices[_i];
+        colEl2.append(buttonEl); ////////
+
+        buttonEl.addEventListener("click", function () {
+          if (clickTimeout) {
             return;
           }
 
-          outOfTime = true;
+          clickTimeout = true;
           clearInterval(myInterval);
-          col = quizContainer.children[0].children[1];
-          row = document.createElement("div");
-          row.setAttribute("class", "row border-top");
-          col.append(row);
-          col = document.createElement("div");
-          col.setAttribute("class", "col-12");
-          row.append(col);
+          var colEl = quizContainerEl.children[0].children[1];
+          var rowEl = document.createElement("div");
+          rowEl.setAttribute("class", "row border-top");
+          colEl.append(rowEl);
+          colEl = document.createElement("div");
+          colEl.setAttribute("class", "col-12");
+          rowEl.append(colEl);
           var parEl = document.createElement("p");
-          col.append(parEl);
-        });
+          colEl.append(parEl);
+
+          if (this.innerHTML === questions[currentQuestion - 1].answer) {
+            parEl.innerHTML = "Correct!";
+          } else {
+            parEl.innerHTML = "Incorrect";
+            timeRemaining = timeRemaining - 10;
+
+            if (timeRemaining < 0) {
+              timeRemaining = 0;
+            }
+
+            timeRemainingEl.setAttribute("value", timeRemaining);
+          }
+
+          currentQuestion++;
+
+          if (currentQuestion > questions.length) {
+            score = timeRemaining;
+          }
+
+          setTimeout(function () {
+            if (currentQuestion > questions.length) {
+              quizContainerEl.setAttribute("class", "container d-none");
+              finalContainerEl.setAttribute("class", "container");
+              finalScoreEl.setAttribute("value", score);
+            } else {
+              generateQuestion(currentQuestion);
+              clickTimeout = false;
+              myInterval = setInterval(function () {
+                if (timeRemaining < 1) {
+                  clearInterval(myInterval);
+                  quizContainerEl.setAttribute("class", "container d-none");
+                  finalContainerEl.setAttribute("class", "container");
+                  return;
+                }
+
+                timeRemaining = timeRemaining - 1;
+                timeRemainingEl.setAttribute("value", timeRemaining);
+              }, 1000);
+            }
+          }, 2000);
+        }); ///////
       }
     }
+
+    function saveHighScore() {
+      var initialsEl = document.getElementById("initials-entry");
+      var newHighScore = {
+        initials: initialsEl.value,
+        highScore: score
+      };
+      console.log(newHighScore); //debugging
+
+      highScores.push(newHighScore);
+      console.log(highScores);
+      localStorage.setItem("scores", JSON.stringify(highScores));
+    }
+
+    submitButtonEl.addEventListener("click", saveHighScore);
+    generateQuestion(currentQuestion);
   }
 
-  startButton.addEventListener("click", startQuiz);
+  startButtonEl.addEventListener("click", startQuiz);
+  highscoreButtonEl.addEventListener("click", function () {
+    landingContainerEl.setAttribute("class", "container d-none");
+    quizContainerEl.setAttribute("class", "container d-none");
+    finalContainerEl.setAttribute("class", "container d-none");
+    highscoreContainerEl.setAttribute("class", "container");
+    var colEl = document.getElementById("highscore-table");
+
+    for (i = 0; i < highScores.length; i++) {
+      var rowEl = document.createElement("div");
+      rowEl.setAttribute("class", "row mb-1");
+      colEl.append(rowEl);
+      var colEl2 = document.createElement("div");
+      colEl2.setAttribute("class", "col-12 text-center");
+      rowEl.append(colEl2);
+      var parEl = document.createElement("div");
+      parEl.innerHTML = "Initials: " + highScores[i].initials + "   Score: " + highScores[i].highScore;
+      colEl2.append(parEl);
+    }
+  });
 }
+
+initializeQuiz();

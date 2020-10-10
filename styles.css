@@ -16,3 +16,11 @@
 .final-score {
     text-align: center;
 }
+
+#highscore-button {
+    color: blue;
+}
+
+.time-remaining {
+    color: blanchedalmond;
+}

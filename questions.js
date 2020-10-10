@@ -1,6 +1,8 @@
-const questions = [{
-        title: "Question 1: The logical operator that represents 'AND' is ____.",
-        choices: ["||", "OR", "&&", "==="],
+var questions = [
+
+    {
+        title: "Question 1: The logical  that represents 'AND' is ____.",
+        choices: ["||", "OR", "&&", "AND"],
         answer: "&&"
     },
 
@@ -23,9 +25,11 @@ const questions = [{
     },
 
     {
-        title: "Question 5: Commonly used data types DO NOT include:",
-        choices: ["strings", "booleans", "alerts", "numbers"],
-        answer: "alerts"
+        title: "Strings are an array of characters",
+        choices: ["True", "False", "Maybe", "What is an array?"],
+        answer: "True"
 
     }
+
+
 ];
